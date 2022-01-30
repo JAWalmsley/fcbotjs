@@ -1,6 +1,8 @@
 const {Client, Intents} = require('discord.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS]});
 
+const config = require('./config.json')
+
 const fs = require('fs')
 
 
@@ -56,4 +58,4 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-client.login(fs.readFileSync('token.txt', 'utf-8'));
+client.login(config.token);
