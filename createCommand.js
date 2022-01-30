@@ -143,7 +143,22 @@ const commands =
                     ]
                 }
             ]
-        }];
+        },
+        {
+            name: 'colour',
+            description: 'Sets user colour',
+            options: [
+                {
+                    name: 'colour',
+                    description: 'The colour you want',
+                    type: 3,
+                    required: true
+                }
+
+            ]
+
+        }
+        ];
 
 const rest = new REST({version: '9'}).setToken('MzA4MDIwNTIyNjQwNDc0MTE0.WQUgdw.bN_NgRUxnEd1ziSLzt25jFMDwzw');
 
@@ -152,8 +167,8 @@ const rest = new REST({version: '9'}).setToken('MzA4MDIwNTIyNjQwNDc0MTE0.WQUgdw.
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(
-            // Routes.applicationGuildCommands("308020522640474114", "424671611057078283"),
-            Routes.applicationCommands("308020522640474114"),
+            Routes.applicationGuildCommands("308020522640474114", "424671611057078283"),
+            // Routes.applicationCommands("308020522640474114"),
             {body: commands},
         );
 
