@@ -4,3 +4,5 @@
 node_modules/
 
 createCommand.js
+
+token.txt
