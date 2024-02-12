@@ -8,13 +8,15 @@ const fs = require('fs');
 async function mconline() {
     let online = await fetch('https://api.mcsrvstat.us/3/mc.jackwalmsley.com');
     let playernames = (await online.json()).players.list.map(p => p.name);
-    client.user.setActivity(`${playernames.length} online | mc.jackwalmsley.com\npog\npog`, { type: "PLAYING" })
+    client.user.setActivity(`mc.jackwalmsley.com | ${playernames.length} online`, { type: "PLAYING" })
+    console.log("update", playernames);
     return playernames;
 }
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     mconline();
+    setInterval(mconline, 60*1000)
 });
 
 client.on('interactionCreate', async interaction => {
@@ -61,7 +63,6 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply({ content: 'Now you look all ' + desiredColour + '!', ephemeral: true });
     }
     else if (interaction.commandName === 'online') {
-        console.log("got a thing!");
         let players = await mconline();
         // await interaction.reply({content: `${(players).map(p => p + "\n")}`});
         let msgcontent = {
@@ -70,8 +71,8 @@ client.on('interactionCreate', async interaction => {
                     "title": `mc.jackwalmsley.com`,
                     "description": `${players.length} players online`,
                     "color": 0x00FFFF,
-                    fields: players.map(function(p) {
-                        return {name: p, value: " "}
+                    fields: players.map(function (p) {
+                        return { name: p, value: " " }
                     })
                 }]
         }
