@@ -6,10 +6,19 @@ const config = require('./config.json')
 const fs = require('fs');
 
 async function mconline() {
-    let online = await fetch(`https://api.mcsrvstat.us/3/${config.mcserver}`);
-    let playernames = (await online.json()).players.list.map(p => p.name);
-    client.user.setActivity(`${config.mcserver} | ${playernames.length} online`, { type: "PLAYING" })
+    let playernames;
+    try {
+    let online = await ((await fetch(`https://api.mcsrvstat.us/3/${config.mcserver}`)).json());
+    playernames = [];
+    if(online.players.online > 0) {
+        playernames = online.players.list.map(p => p.name);
+    }
+    client.user.setActivity(`${config.mcserver} | ${playernames.length} online`, { type: "PLAYING" });
     console.log("update", playernames);
+    }
+    catch(e) {
+        console.error("Could not update", e);
+    }
     return playernames;
 }
 
