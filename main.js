@@ -6,9 +6,9 @@ const config = require('./config.json')
 const fs = require('fs');
 
 async function mconline() {
-    let online = await fetch('https://api.mcsrvstat.us/3/mc.jackwalmsley.com');
+    let online = await fetch(`https://api.mcsrvstat.us/3/${config.mcserver}`);
     let playernames = (await online.json()).players.list.map(p => p.name);
-    client.user.setActivity(`mc.jackwalmsley.com | ${playernames.length} online`, { type: "PLAYING" })
+    client.user.setActivity(`${config.mcserver} | ${playernames.length} online`, { type: "PLAYING" })
     console.log("update", playernames);
     return playernames;
 }
@@ -68,7 +68,7 @@ client.on('interactionCreate', async interaction => {
         let msgcontent = {
             embeds:
                 [{
-                    "title": `mc.jackwalmsley.com`,
+                    "title": `${config.mcserver}`,
                     "description": `${players.length} players online`,
                     "color": 0x00FFFF,
                     fields: players.map(function (p) {
